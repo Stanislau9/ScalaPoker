@@ -1,3 +1,3 @@
 package playdata
 
-case class Result(list: List[(Combination, Hand)])
+final case class Result(list: List[(Combination, Hand)])
