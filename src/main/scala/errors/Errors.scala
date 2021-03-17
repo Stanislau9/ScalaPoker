@@ -9,6 +9,9 @@ case object Errors {
   final case class NotASuit(char: Char) extends Errors {
     override def toString: String = f"$char can't convert to suit"
   }
+  final case class NotACard(string: String) extends Errors {
+    override def toString: String = f"$string can't convert to card"
+  }
   final case class NotABoard(string: String) extends Errors {
     override def toString: String = f"$string can't convert to board"
   }
