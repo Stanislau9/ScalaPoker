@@ -3,6 +3,7 @@ package playdata
 import card.Card
 import card.Rank._
 import card.Suit._
+import errors.Errors.NotValidSet
 import playdata.Hand._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -27,30 +28,30 @@ class TestCaseSpec extends AnyFlatSpec with Matchers {
 
   val b: Board = Board(card1, card2, card3, card4, card5)
 
-  val texH1: Hand = TexasHand(card6, card7, card8)
-  val texH2: Hand = TexasHand(card9, card10, card11)
-  val texH3: Hand = TexasHand(card12, card13, card1)
+  val texH1: Hand = TexasHand(card6, card7)
+  val texH2: Hand = TexasHand(card9, card10)
+  val texH3: Hand = TexasHand(card12, card13)
   val omaH1: Hand = OmahaHand(card6, card7, card8, card9)
   val omaH2: Hand = OmahaHand(card10, card11, card12, card13)
   val omaH3: Hand = OmahaHand(card14, card15, card16, card13)
 
   "List texas hands" should "create Right(TestCase)" in {
-    TestCase(b, List(texH1, texH2)).create shouldEqual Right(TestCase(b, List(texH1, texH2)))
+    TestCase.create("QcQdQsQh3c 3d3s AcAd") shouldEqual Right(TestCase(b, List(texH1, texH2)))
   }
   "List omaha hands" should "create Right(TestCase)" in {
-    TestCase(b, List(omaH1, omaH2)).create shouldEqual Right(TestCase(b, List(omaH1, omaH2)))
+    TestCase.create("QcQdQsQh3c 3d3s3hAc AdAsAhTc") shouldEqual Right(TestCase(b, List(omaH1, omaH2)))
   }
-  "List texas hands with duplicate cards" should "create Left(Not valid cards)" in {
-    TestCase(b, List(texH1, texH2, texH3)).create shouldEqual Left("Not valid cards")
+  "List texas hands with duplicate cards" should "create Left(NotValidSet)" in {
+    TestCase.create("QcQdQsQh3c 3s3s AcAd") shouldEqual Left(NotValidSet)
   }
-  "List omaha hands with duplicate cards" should "create Left(Not valid cards)" in {
-    TestCase(b, List(omaH1, omaH2, omaH3)).create shouldEqual Left("Not valid cards")
+  "List omaha hands with duplicate cards" should "create Left(NotValidSet)" in {
+    TestCase.create("QcQdQsQh3c 7cTh5s5s 5hJh2s7d") shouldEqual Left(NotValidSet)
   }
-  "List different hands" should "create Left(Not valid hands)" in {
-    TestCase(b, List(omaH1, texH2, omaH3)).create shouldEqual Left("Not valid hands")
+  "List different hands" should "create Left(NotValidSet)" in {
+    TestCase.create("QcQdQsQh3c 8s2h6s8h AcAd") shouldEqual Left(NotValidSet)
   }
-  "Empty List of hands" should "create Left(Not valid hands)" in {
-    TestCase(b, List()).create shouldEqual Left("Not valid hands")
+  "Empty List of hands" should "create Left(NotValidSet)" in {
+    TestCase.create("QcQdQsQh3c") shouldEqual Left(NotValidSet)
   }
 
 }
