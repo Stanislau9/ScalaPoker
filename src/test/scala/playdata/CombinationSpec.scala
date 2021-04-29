@@ -2,7 +2,6 @@ package playdata
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import Combination._
 
 class CombinationSpec extends AnyFlatSpec with Matchers {
   "StraighFlush" should "more than FourKing" in {

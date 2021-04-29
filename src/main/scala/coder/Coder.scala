@@ -1,10 +1,7 @@
 package coder
 
 import card._
-import card.Suit._
-import card.Rank._
-import errors.Errors
-import errors.Errors._
+import errors._
 
 object Coder {
 

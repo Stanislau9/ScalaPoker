@@ -2,8 +2,7 @@ package card
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import Rank._
-import Suit._
+
 class CardSpec extends AnyFlatSpec with Matchers {
   "Ah" should "more than 2c" in {
     Card(Ace, Hearts) > Card(Two, Clubs) shouldEqual true
